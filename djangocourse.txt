@@ -1,0 +1,58 @@
+Django Models-
+    Models in Django are classes that represent the structure of the data in your application. Models define the schema of your database which includes the behaviour of the class.
+
+    Example:-
+        from django.db import models
+
+        class Author(models.Model):
+            name = models.CharField(max_length=100)
+            email = models.EmailField()
+
+         class Book(models.Model):
+            title = models.CharField(max_length=200)
+            author = models.ForeignKey(Author, on_delete=models.CASCADE)
+            publication_date = models.DateField()
+
+    Here you have Author model and Book model for like a library system which acts like classes in Django. Here Author has a many-to-one relationship with Book as one author can have many books. Foreign Key associated this relationship and on_delete=models.cascade makes sure that when author is deleted the books are also deleted.
+
+
+
+Django Migrations-
+     When you define models, you are defining the structure of your database tables and their relationships. It isnt stored directly to your database schema as you modify your models over time. So to ensure that your schema stays in sync with your models you have to migrate them.
+     
+     Command- python manage.py makemigrations
+              python manage.py migrate
+
+
+
+Django Admin-
+     The Admin interface is used to interact with your application's data models which allows superusers and staff users to perform crud oprations on the database records through a user-friendly interface.
+
+     Steps- 1. Register your model
+                from .models import Photo, Category
+                admin.site.register(Category)
+                admin.site.register(Photo) 
+
+            2. Accessing the admin interface
+                Go to the /admin url and log in with your superuser account. If you dont have it create it with python manage.py createsuperuser.
+                 
+
+Django Static Files and Images-
+    Following are the settings required to configure how static and media files are stored in the Django Project during dev and deployment. 
+
+    Steps- 1.  STATIC_URL = 'static/'
+               This line gives the base url of the folder from where static files will be served.
+
+            2.  MEDIA_URL = '/images/'
+                This line gives the base url of the folder from where images or media files will be served.
+                    
+            3. STATICFILES_DIRS = [
+                    BASE_DIR / 'static'
+                ]
+                This line lists all the directories which we will look for additional static files.
+
+            4.  MEDIA_ROOT = BASE_DIR / 'static/images'
+                This line  specifies the directory on the filesystem where media files uploaded by users will be stored.
+
+            5.  STATIC_ROOT = BASE_DIR / 'staticfiles'
+                This line specifies the directory on the filesystem where Django will collect all static files from various locations into a single location for deployment. 
